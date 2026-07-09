@@ -359,6 +359,24 @@ button,input,select,textarea,.btn,.status,.tag,.week-badge,.score-pill,.mini-tag
 .kpi-card-clicavel{cursor:pointer;transition:.18s}
 .kpi-card-clicavel:hover{border-color:rgba(203,160,82,.45)!important;box-shadow:0 8px 24px rgba(60,60,60,.14)!important;transform:translateY(-2px)}
 
+
+.btn-sair{display:flex;align-items:center;gap:6px;border:1px solid rgba(180,54,54,.35);background:rgba(180,54,54,.08);color:var(--dangerText);border-radius:13px;padding:9px 14px;cursor:pointer;font-weight:800;font-size:13px;transition:.2s;white-space:nowrap}
+.btn-sair:hover{background:rgba(180,54,54,.18);border-color:rgba(180,54,54,.55)}
+.btn-salvar-global{display:flex;align-items:center;gap:6px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#111;border:none;border-radius:13px;padding:9px 16px;cursor:pointer;font-weight:800;font-size:13px;transition:.2s;white-space:nowrap}
+.btn-salvar-global:hover{opacity:.9;transform:translateY(-1px)}
+.btn-salvar-global.salvando{opacity:.7;cursor:wait}
+.justif-backdrop{position:fixed;inset:0;background:rgba(30,30,30,.55);z-index:2000;display:none;align-items:center;justify-content:center;padding:22px}
+.justif-backdrop.open{display:flex}
+.justif-modal{width:min(480px,95vw);background:#FFFFFF;border:1px solid rgba(203,160,82,.28);border-radius:20px;box-shadow:0 20px 50px rgba(60,60,60,.20);padding:28px}
+.justif-modal h3{margin:0 0 6px;font-size:18px;color:var(--text);font-family:var(--font-heading)}
+.justif-modal p{margin:0 0 18px;font-size:13px;color:var(--muted)}
+.justif-modal textarea{width:100%;background:var(--bg-secondary);color:var(--text);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:14px;font-family:var(--font-body);resize:vertical;min-height:100px;outline:none;box-sizing:border-box}
+.justif-modal textarea:focus{border-color:rgba(203,160,82,.65);box-shadow:0 0 0 3px rgba(203,160,82,.12)}
+.justif-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:16px}
+.motivo-badge{display:inline-block;background:rgba(60,60,60,.07);border:1px solid var(--line);border-radius:8px;padding:4px 9px;font-size:11px;color:var(--text-secondary);margin-top:4px;font-style:italic}
+@media(max-width:900px){.sidebar{width:220px}main{margin-left:220px}.topbar .actions{flex-wrap:wrap;gap:6px}}
+@media(max-width:680px){.sidebar{transform:translateX(-100%);width:260px;transition:.25s;z-index:100}.sidebar.open{transform:translateX(0)}main{margin-left:0}.topbar{padding:10px 14px}.topbar .title p{display:none}.topbar .actions .btn,.topbar .actions button{font-size:12px;padding:7px 10px}.sync-piperun-btn span:last-child{display:none}.section{margin:0 10px}.card{padding:14px}.dashboard-main-kpis{--cols:2 !important}.secondary-kpis{--cols:2 !important}.dash-row.row-4,.dash-row.row-5{grid-template-columns:1fr 1fr}.dash-row > div:nth-child(n+4){display:none}}
+@media(max-width:480px){.dashboard-main-kpis{--cols:1 !important}.secondary-kpis{--cols:1 !important}.topbar .title h2{font-size:15px}.btn-sair span:last-child,.btn-salvar-global span:last-child{display:none}}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script></script>
 <style>
@@ -419,7 +437,7 @@ button,input,select,textarea,.btn,.status,.tag,.week-badge,.score-pill,.mini-tag
   <div class="sidebar-footer">Rotina comercial: relatório D-2, alinhamento 30 minutos antes, feedback pós-reunião e gestão semanal do funil.</div>
 </aside>
 <main>
-  <div class="topbar"><div class="title"><h2>Painel Comercial Gaiga</h2><p>Sistema de gestão comercial: prevenção de cancelamentos/no-show, Reuniões Francisco, Follow up, Análise de reuniões, Trilha de desenvolvimento e controle de validações por consultor.</p></div><div class="actions"><input id="importadorDashboard" class="file-input" type="file" accept=".xlsx,.xls,.csv,.json" onchange="importarDados(event)"><button class="btn" onclick="document.getElementById('importadorDashboard').click()">Importar arquivo</button><button id="syncPiperunBtn" class="sync-piperun-btn" onclick="sincronizarPiperunManual()" title="Sincronizar com PipeRun"><span class="sync-dot" id="syncDot"></span><span id="syncBtnLabel">Sincronizar PipeRun</span></button><button class="btn" onclick="recarregarBaseArquivo()">Recarregar base do arquivo</button><button class="btn" onclick="limparFiltros()">Limpar filtros</button><button class="btn primary" onclick="document.getElementById('empresa').focus();abrirAba('anti')">Nova reunião</button></div></div>
+  <div class="topbar"><div class="title"><h2>Painel Comercial Gaiga</h2><p>Sistema de gestão comercial: prevenção de cancelamentos/no-show, Reuniões Francisco, Follow up, Análise de reuniões, Trilha de desenvolvimento e controle de validações por consultor.</p></div><div class="actions"><input id="importadorDashboard" class="file-input" type="file" accept=".xlsx,.xls,.csv,.json" onchange="importarDados(event)"><button class="btn" onclick="document.getElementById('importadorDashboard').click()">Importar arquivo</button><button id="syncPiperunBtn" class="sync-piperun-btn" onclick="sincronizarPiperunManual()" title="Sincronizar com PipeRun"><span class="sync-dot" id="syncDot"></span><span id="syncBtnLabel">Sincronizar PipeRun</span></button><button class="btn" onclick="recarregarBaseArquivo()">Recarregar base do arquivo</button><button class="btn-salvar-global" id="btnSalvarGlobal" onclick="salvarGlobal()"><span>&#128190;</span><span>Salvar</span></button><button class="btn-sair" onclick="fazerLogout()"><span>&#8594;</span><span>Sair</span></button><button class="btn" onclick="limparFiltros()">Limpar filtros</button><button class="btn primary" onclick="document.getElementById('empresa').focus();abrirAba('anti')">Nova reunião</button></div></div>
 
   <div class="card global-filter-card">
     <div class="global-filter-title"><strong>Filtros gerais do painel</strong><span>Aplicados ao dashboard, Anti No-show, Reuniões Francisco, Follow up, Análise de reuniões.</span></div>
@@ -637,6 +655,17 @@ button,input,select,textarea,.btn,.status,.tag,.week-badge,.score-pill,.mini-tag
     <div class="dash-modal-footer">
       <span id="dashModalRodape"></span>
       <button class="btn" onclick="fecharDashModal()">Fechar</button>
+    </div>
+  </div>
+</div>
+<div id="justifBackdrop" class="justif-backdrop" onclick="fecharJustif(event)">
+  <div class="justif-modal" onclick="event.stopPropagation()">
+    <h3 id="justifTitulo">Justificar</h3>
+    <p id="justifSub">Informe o motivo para registro no painel.</p>
+    <textarea id="justifTexto" placeholder="Descreva o motivo..."></textarea>
+    <div class="justif-actions">
+      <button class="btn" onclick="fecharJustif()">Cancelar</button>
+      <button class="btn primary" id="justifConfirmar" onclick="confirmarJustif()">Confirmar</button>
     </div>
   </div>
 </div>
@@ -1074,8 +1103,8 @@ function toggleFranciscoSolicitado(id){const r=reunioes.find(x=>x.id===id);if(!r
 function marcarRealizada(id){const r=reunioes.find(x=>x.id===id);if(!r)return;r.realizada=true;r.statusReuniao='Realizada';if(!followups.some(f=>f.origemId===id)){followups.push({id:uid(),origemId:id,empresa:r.empresa,assunto:r.assunto||r.oportunidade,dataReuniao:r.data,horaReuniao:r.hora,consultor:r.consultor,tipo:r.tipo,checks:Array(etapasFollow.length).fill(false),criadoEm:new Date().toISOString().slice(0,10)})}if(!avaliacoes[id])avaliacoes[id]={};salvar();render();alert('Reunião marcada como realizada. Empresa enviada para Análise de reuniões e Follow up.')}
 function alternarRealizada(id){const r=reunioes.find(x=>x.id===id);if(!r)return;if(r.realizada){if(!confirm('Deseja desmarcar esta reunião como realizada? Ela sairá de Análise de reuniões e do Follow up.'))return;r.realizada=false;r.statusReuniao='Agendada';followups=followups.filter(f=>f.origemId!==id);delete avaliacoes[id];delete escutas[id];trilhas=trilhas.filter(t=>t.origemId!==id);salvar();render();return}marcarRealizada(id)}
 
-function marcarNoShow(id){const r=reunioes.find(x=>x.id===id);if(!r)return;if(r.statusReuniao==='No-show'){if(!confirm('Deseja desfazer o No-show desta reunião?'))return;r.statusReuniao='Agendada';salvar();render();return;}if(!confirm('Confirmar No-show para esta reunião?'))return;r.statusReuniao='No-show';r.realizada=false;followups=followups.filter(f=>f.origemId!==id);delete avaliacoes[id];trilhas=trilhas.filter(t=>t.origemId!==id);salvar();render();}
-function marcarCancelada(id){const r=reunioes.find(x=>x.id===id);if(!r)return;if(r.statusReuniao==='Cancelada'){if(!confirm('Deseja desfazer o cancelamento desta reunião?'))return;r.statusReuniao='Agendada';salvar();render();return;}if(!confirm('Confirmar cancelamento desta reunião?'))return;r.statusReuniao='Cancelada';r.realizada=false;followups=followups.filter(f=>f.origemId!==id);delete avaliacoes[id];trilhas=trilhas.filter(t=>t.origemId!==id);salvar();render();}function remover(id){if(confirm('Deseja remover esta reunião?')){reunioes=reunioes.filter(r=>r.id!==id);followups=followups.filter(f=>f.origemId!==id);francisco=francisco.filter(f=>f.origemId!==id);franciscoExcluidos=franciscoExcluidos.filter(x=>x!==id);escutasExcluidas=escutasExcluidas.filter(x=>x!==id);delete avaliacoes[id];delete escutas[id];trilhas=trilhas.filter(t=>t.origemId!==id);salvar();render()}}
+function marcarNoShow(id){const r=reunioes.find(x=>x.id===id);if(!r)return;if(r.statusReuniao==='No-show'){if(!confirm('Deseja desfazer o No-show desta reunião?'))return;r.statusReuniao='Agendada';r.motivoNoShow='';salvar();render();return;}abrirJustif('noshow',id);}
+function marcarCancelada(id){const r=reunioes.find(x=>x.id===id);if(!r)return;if(r.statusReuniao==='Cancelada'){if(!confirm('Deseja desfazer o cancelamento desta reunião?'))return;r.statusReuniao='Agendada';r.motivoCancelamento='';salvar();render();return;}abrirJustif('cancelada',id);}function remover(id){if(confirm('Deseja remover esta reunião?')){reunioes=reunioes.filter(r=>r.id!==id);followups=followups.filter(f=>f.origemId!==id);francisco=francisco.filter(f=>f.origemId!==id);franciscoExcluidos=franciscoExcluidos.filter(x=>x!==id);escutasExcluidas=escutasExcluidas.filter(x=>x!==id);delete avaliacoes[id];delete escutas[id];trilhas=trilhas.filter(t=>t.origemId!==id);salvar();render()}}
 function antiReunioesBase(){return reunioes.filter(r=>!r.manualAnalise)}
 function dataObjFiltro(o){if(!o)return null;const data=o.data||o.dataReuniao||o.dataAnalise||'';const hora=o.hora||o.horaReuniao||o.horario||'';if(!data)return null;const dt=new Date(`${data}T${hora||'00:00'}`);return isNaN(dt)?null:dt}
 function semanaISO(dt){const d=new Date(Date.UTC(dt.getFullYear(),dt.getMonth(),dt.getDate()));const day=d.getUTCDay()||7;d.setUTCDate(d.getUTCDate()+4-day);const yearStart=new Date(Date.UTC(d.getUTCFullYear(),0,1));const week=Math.ceil((((d-yearStart)/86400000)+1)/7);return `${d.getUTCFullYear()}-W${String(week).padStart(2,'0')}`}
@@ -2075,7 +2104,7 @@ function abrirDashModal(tipo){
 
 // ===== SUPABASE — AUTH E BANCO =====
 const _sb = window.supabase.createClient('https://plazbygikstlsbbwhvgb.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBsYXpieWdpa3N0bHNiYndodmdiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMzOTUyMjMsImV4cCI6MjA5ODk3MTIyM30.AesTlE9GCsYrFM2me3OKSEwyoESudFoVlddQet5cIb8');
-let _sbUser = null;
+var _sbUser = null;
 
 // --- AUTH ---
 async function fazerLogin(){
@@ -2208,6 +2237,7 @@ async function salvarBanco(){
       data_agendamento: r.dataAgendamento||null, consultor: r.consultor,
       tipo: r.tipo, checks: r.checks||[], francisco_ativo: r.franciscoAtivo||false,
       realizada: r.realizada||false, status_reuniao: r.statusReuniao||'Agendada',
+      motivo_noshow: r.motivoNoShow||'', motivo_cancelamento: r.motivoCancelamento||'',
       origem_arquivo: r.origemArquivo||'', origem_id: r.origemId||'', deal_id: r.dealId||'',
       updated_at: new Date().toISOString()
     }));
@@ -2274,6 +2304,64 @@ async function salvarBanco(){
     render();
   }
 })();
+
+// ===== SALVAR GLOBAL =====
+async function salvarGlobal(){
+  var btn = document.getElementById('btnSalvarGlobal');
+  var lbl = btn ? btn.querySelector('span:last-child') : null;
+  if(btn) btn.classList.add('salvando');
+  if(lbl) lbl.textContent = 'Salvando...';
+  salvar();
+  if(typeof _sbUser !== 'undefined' && _sbUser) await salvarBanco();
+  if(btn) btn.classList.remove('salvando');
+  if(lbl){ lbl.textContent = 'Salvo!'; setTimeout(function(){ lbl.textContent = 'Salvar'; }, 2000); }
+}
+// ===== MODAL JUSTIFICATIVA =====
+var _justifTipo = '', _justifId = '';
+function abrirJustif(tipo, id){
+  _justifTipo = tipo; _justifId = id;
+  var titulo  = document.getElementById('justifTitulo');
+  var sub     = document.getElementById('justifSub');
+  var txt     = document.getElementById('justifTexto');
+  var btnConf = document.getElementById('justifConfirmar');
+  if(tipo === 'noshow'){
+    titulo.textContent  = 'Registrar No-show';
+    sub.textContent     = 'Informe o motivo do no-show (opcional).';
+    btnConf.className   = 'btn btn-noshow';
+    btnConf.textContent = 'Confirmar No-show';
+  } else {
+    titulo.textContent  = 'Registrar Cancelamento';
+    sub.textContent     = 'Informe o motivo do cancelamento (opcional).';
+    btnConf.className   = 'btn btn-cancelada';
+    btnConf.textContent = 'Confirmar Cancelamento';
+  }
+  txt.value = '';
+  document.getElementById('justifBackdrop').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  setTimeout(function(){ txt.focus(); }, 100);
+}
+function fecharJustif(e){
+  if(e && e.target !== document.getElementById('justifBackdrop')) return;
+  document.getElementById('justifBackdrop').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function confirmarJustif(){
+  var motivo = document.getElementById('justifTexto').value.trim();
+  var r = reunioes.find(function(x){ return x.id === _justifId; });
+  if(!r) return;
+  if(_justifTipo === 'noshow'){
+    r.statusReuniao = 'No-show'; r.motivoNoShow = motivo; r.realizada = false;
+    followups = followups.filter(function(f){ return f.origemId !== _justifId; });
+    delete avaliacoes[_justifId];
+    trilhas = trilhas.filter(function(t){ return t.origemId !== _justifId; });
+  } else {
+    r.statusReuniao = 'Cancelada'; r.motivoCancelamento = motivo; r.realizada = false;
+    followups = followups.filter(function(f){ return f.origemId !== _justifId; });
+    delete avaliacoes[_justifId];
+    trilhas = trilhas.filter(function(t){ return t.origemId !== _justifId; });
+  }
+  salvar(); render(); fecharJustif();
+}
 
 seed();ajustarFiltroPeriodo();
 render();
