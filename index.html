@@ -149,6 +149,14 @@ body > .menu-toggle,.floating-menu,.sidebar-float-toggle,#menuFloat,#sidebarTogg
 
 /* Dashboard executivo ampliado */
 .dashboard-main-kpis .card{min-height:126px}
+.dashboard-kpis-5{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;margin-bottom:14px}
+.dashboard-kpis-5 .card{min-height:110px;padding:14px 16px}
+.dashboard-kpis-5 .kpi-label{font-size:11px}
+.dashboard-kpis-5 .kpi-value{font-size:32px}
+.dashboard-kpis-5 .kpi-note{font-size:11px}
+@media(max-width:1100px){.dashboard-kpis-5{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:680px){.dashboard-kpis-5{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:400px){.dashboard-kpis-5{grid-template-columns:1fr}}
 .secondary-kpis .kpi-value{font-size:34px}
 .dashboard-alert-grid{grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
 .dashboard-summary-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:12px}
@@ -271,6 +279,8 @@ button,input,select,textarea,.btn,.status,.tag,.week-badge,.score-pill,.mini-tag
 
 .btn.btn-noshow{border:1px solid rgba(180,54,54,.35);background:rgba(180,54,54,.10);color:var(--dangerText)}
 .btn.btn-noshow:hover,.btn.btn-noshow-on{border-color:rgba(180,54,54,.60);background:rgba(180,54,54,.20);color:var(--dangerText)}
+.btn.btn-remarcada{border:1px solid rgba(77,124,255,.35);background:rgba(77,124,255,.10);color:var(--blueText)}
+.btn.btn-remarcada:hover,.btn.btn-remarcada-on{border-color:rgba(77,124,255,.60);background:rgba(77,124,255,.20);color:var(--blueText)}
 .btn.btn-cancelada{border:1px solid rgba(214,155,47,.35);background:rgba(214,155,47,.10);color:var(--warningText)}
 .btn.btn-cancelada:hover,.btn.btn-cancelada-on{border-color:rgba(214,155,47,.60);background:rgba(214,155,47,.22);color:var(--warningText)}
 .pendentes-modal-backdrop{position:fixed;inset:0;background:rgba(30,30,30,.55);z-index:1000;display:none;align-items:center;justify-content:center;padding:22px}
@@ -373,6 +383,7 @@ button,input,select,textarea,.btn,.status,.tag,.week-badge,.score-pill,.mini-tag
 .justif-modal textarea{width:100%;background:var(--bg-secondary);color:var(--text);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:14px;font-family:var(--font-body);resize:vertical;min-height:100px;outline:none;box-sizing:border-box}
 .justif-modal textarea:focus{border-color:rgba(203,160,82,.65);box-shadow:0 0 0 3px rgba(203,160,82,.12)}
 .justif-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:16px}
+.status.remarcada{background:rgba(77,124,255,.12);color:var(--blueText);border-color:rgba(77,124,255,.30)}
 .motivo-badge{display:inline-block;background:rgba(60,60,60,.07);border:1px solid var(--line);border-radius:8px;padding:4px 9px;font-size:11px;color:var(--text-secondary);margin-top:4px;font-style:italic}
 @media(max-width:900px){.sidebar{width:220px}main{margin-left:220px}.topbar .actions{flex-wrap:wrap;gap:6px}}
 @media(max-width:680px){.sidebar{transform:translateX(-100%);width:260px;transition:.25s;z-index:100}.sidebar.open{transform:translateX(0)}main{margin-left:0}.topbar{padding:10px 14px}.topbar .title p{display:none}.topbar .actions .btn,.topbar .actions button{font-size:12px;padding:7px 10px}.sync-piperun-btn span:last-child{display:none}.section{margin:0 10px}.card{padding:14px}.dashboard-main-kpis{--cols:2 !important}.secondary-kpis{--cols:2 !important}.dash-row.row-4,.dash-row.row-5{grid-template-columns:1fr 1fr}.dash-row > div:nth-child(n+4){display:none}}
@@ -437,7 +448,7 @@ button,input,select,textarea,.btn,.status,.tag,.week-badge,.score-pill,.mini-tag
   <div class="sidebar-footer">Rotina comercial: relatório D-2, alinhamento 30 minutos antes, feedback pós-reunião e gestão semanal do funil.</div>
 </aside>
 <main>
-  <div class="topbar"><div class="title"><h2>Painel Comercial Gaiga</h2><p>Sistema de gestão comercial: prevenção de cancelamentos/no-show, Reuniões Francisco, Follow up, Análise de reuniões, Trilha de desenvolvimento e controle de validações por consultor.</p></div><div class="actions"><input id="importadorDashboard" class="file-input" type="file" accept=".xlsx,.xls,.csv,.json" onchange="importarDados(event)"><button class="btn" onclick="document.getElementById('importadorDashboard').click()">Importar arquivo</button><button id="syncPiperunBtn" class="sync-piperun-btn" onclick="sincronizarPiperunManual()" title="Sincronizar com PipeRun"><span class="sync-dot" id="syncDot"></span><span id="syncBtnLabel">Sincronizar PipeRun</span></button><button class="btn" onclick="recarregarBaseArquivo()">Recarregar base do arquivo</button><button class="btn-salvar-global" id="btnSalvarGlobal" onclick="salvarGlobal()"><span>&#128190;</span><span>Salvar</span></button><button class="btn-sair" onclick="fazerLogout()"><span>&#8594;</span><span>Sair</span></button><button class="btn" onclick="limparFiltros()">Limpar filtros</button><button class="btn primary" onclick="document.getElementById('empresa').focus();abrirAba('anti')">Nova reunião</button></div></div>
+  <div class="topbar"><div class="title"><h2>Painel Comercial Gaiga</h2><p>Sistema de gestão comercial: prevenção de cancelamentos/no-show, Reuniões Francisco, Follow up, Análise de reuniões, Trilha de desenvolvimento e controle de validações por consultor.</p></div><div class="actions"><input id="importadorDashboard" class="file-input" type="file" accept=".xlsx,.xls,.csv,.json" onchange="importarDados(event)"><button class="btn" onclick="document.getElementById('importadorDashboard').click()">Importar arquivo</button><button id="syncPiperunBtn" class="sync-piperun-btn" onclick="sincronizarPiperunManual()" title="Sincronizar com PipeRun"><span class="sync-dot" id="syncDot"></span><span id="syncBtnLabel">Sincronizar PipeRun</span></button><button class="btn" onclick="recarregarBaseArquivo()">Recarregar base do arquivo</button><button class="btn-salvar-global" id="btnSalvarGlobal" onclick="salvarGlobal()"><span>&#128190;</span><span>Salvar</span></button><button class="btn" id="btnMigrar" onclick="migrarLocalStorageBanco()" title="Migrar dados salvos localmente para o banco de dados" style="font-size:12px;padding:8px 12px;display:none">&#8593; Migrar dados</button><button class="btn-sair" onclick="fazerLogout()"><span>&#8594;</span><span>Sair</span></button><button class="btn" onclick="limparFiltros()">Limpar filtros</button><button class="btn primary" onclick="document.getElementById('empresa').focus();abrirAba('anti')">Nova reunião</button></div></div>
 
   <div class="card global-filter-card">
     <div class="global-filter-title"><strong>Filtros gerais do painel</strong><span>Aplicados ao dashboard, Anti No-show, Reuniões Francisco, Follow up, Análise de reuniões.</span></div>
@@ -453,26 +464,17 @@ button,input,select,textarea,.btn,.status,.tag,.week-badge,.score-pill,.mini-tag
 
   <section id="dashboard" class="section active">
 
-    <div class="card dashboard-save-card">
-      <div>
-        <h3>Salvar atualizações do painel</h3>
-        <p>Use este botão para gravar manualmente todas as alterações feitas em Anti No-show, Reuniões Francisco, Follow up, Análise de reuniões, Gestão de Atividades e Trilha de Desenvolvimento.</p>
-      </div>
-      <div class="dashboard-save-actions">
-        <span id="ultimoSalvamento" class="save-stamp">Último salvamento: automático</span>
-        <button class="btn" onclick="document.getElementById('importadorDashboard').click()">Importar Excel</button>
-        <button class="btn primary" onclick="salvarAtualizacoesDashboard()">Salvar atualizações</button>
-      </div>
-    </div>
-    <div class="grid cards dashboard-main-kpis">
+    <div class="grid cards dashboard-kpis-5">
       <div class="card kpi-card-clicavel" onclick="abrirDashModal('agendadas')" title="Ver reuniões agendadas"><div class="kpi-label">Reuniões agendadas</div><div id="kpiTotal" class="kpi-value">0</div><div class="kpi-note">Clique para detalhar</div></div>
       <div class="card kpi-card-clicavel" onclick="abrirDashModal('francisco')" title="Ver reuniões Francisco"><div class="kpi-label">Reuniões Francisco</div><div id="kpiFrancisco" class="kpi-value">0</div><div class="kpi-note">Clique para detalhar</div></div>
       <div class="card kpi-card-clicavel" onclick="abrirDashModal('noshow')" title="Ver no-shows"><div class="kpi-label">No-show</div><div id="kpiNoShowDash" class="kpi-value">0</div><div class="kpi-note">Clique para detalhar</div></div>
       <div class="card kpi-card-clicavel" onclick="abrirDashModal('canceladas')" title="Ver canceladas"><div class="kpi-label">Canceladas</div><div id="kpiCanceladasDash" class="kpi-value">0</div><div class="kpi-note">Clique para detalhar</div></div>
+      <div class="card kpi-card-clicavel" onclick="abrirDashModal('antinoshow')" title="Ver ranking Anti No-show"><div class="kpi-label">Anti No-show médio</div><div id="kpiProb" class="kpi-value">0%</div><div class="kpi-note">Clique para detalhar</div></div>
     </div>
 
-    <div class="grid cards dashboard-main-kpis secondary-kpis">
-      <div class="card kpi-card-clicavel" onclick="abrirDashModal('antinoshow')" title="Ver ranking Anti No-show"><div class="kpi-label">Anti No-show médio</div><div id="kpiProb" class="kpi-value">0%</div><div class="kpi-note">Clique para detalhar</div></div>
+    <div class="grid cards dashboard-kpis-5 secondary-kpis">
+      <div class="card kpi-card-clicavel" onclick="abrirDashModal('realizadas_kpi')" title="Ver realizadas"><div class="kpi-label">Realizadas</div><div id="kpiRealizadasDash" class="kpi-value">0</div><div class="kpi-note">Clique para detalhar</div></div>
+      <div class="card kpi-card-clicavel" onclick="abrirDashModal('remarcadas')" title="Ver remarcadas"><div class="kpi-label">Remarcadas</div><div id="kpiRemarcadasDash" class="kpi-value">0</div><div class="kpi-note">Clique para detalhar</div></div>
       <div class="card kpi-card-clicavel" onclick="abrirDashModal('analise')" title="Ver análises"><div class="kpi-label">Análise de reuniões</div><div id="kpiAnaliseDash" class="kpi-value">0</div><div class="kpi-note">Clique para detalhar</div></div>
       <div class="card kpi-card-clicavel" onclick="abrirDashModal('trilha')" title="Ver trilhas"><div class="kpi-label">Trilha de desenvolvimento</div><div id="kpiTrilhaDash" class="kpi-value">0</div><div class="kpi-note">Clique para detalhar</div></div>
       <div class="card overdue-kpi-card"><div class="kpi-label">Atividades atrasadas</div><button class="overdue-dashboard-btn" onclick="abrirAba('gestao')"><span id="kpiAtividadesAtrasadasDash">0</span></button><div class="kpi-note">Clique para abrir Gestão de Atividades</div></div>
@@ -503,14 +505,16 @@ button,input,select,textarea,.btn,.status,.tag,.week-badge,.score-pill,.mini-tag
   </section>
 
   <section id="anti" class="section">
-    <div class="grid cards dashboard-main-kpis" style="margin-bottom:0">
+    <div class="grid cards dashboard-kpis-5" style="margin-bottom:14px">
       <div class="card"><div class="kpi-label">Reuniões agendadas</div><div id="antiKpiTotal" class="kpi-value">0</div><div class="kpi-note">Base ativa do período</div></div>
       <div class="card"><div class="kpi-label">Reuniões Francisco</div><div id="antiKpiFrancisco" class="kpi-value">0</div><div class="kpi-note">Com Francisco marcado e 85%+</div></div>
-      <div class="card"><div class="kpi-label">No-show</div><div id="antiKpiNoShow" class="kpi-value">0</div><div class="kpi-note">Reunioes classificadas como no-show</div></div>
-      <div class="card"><div class="kpi-label">Canceladas</div><div id="antiKpiCanceladas" class="kpi-value">0</div><div class="kpi-note">Reunioes canceladas</div></div>
-    </div>
-    <div class="grid cards dashboard-main-kpis secondary-kpis" style="margin-bottom:18px">
+      <div class="card"><div class="kpi-label">No-show</div><div id="antiKpiNoShow" class="kpi-value">0</div><div class="kpi-note">Reuniões no-show</div></div>
+      <div class="card"><div class="kpi-label">Canceladas</div><div id="antiKpiCanceladas" class="kpi-value">0</div><div class="kpi-note">Reuniões canceladas</div></div>
       <div class="card"><div class="kpi-label">Anti No-show médio</div><div id="antiKpiProb" class="kpi-value">0%</div><div class="kpi-note">Validações pré-reunião</div></div>
+    </div>
+    <div class="grid cards dashboard-kpis-5 secondary-kpis" style="margin-bottom:18px">
+      <div class="card"><div class="kpi-label">Realizadas</div><div id="antiKpiRealizadas" class="kpi-value">0</div><div class="kpi-note">Reuniões realizadas</div></div>
+      <div class="card"><div class="kpi-label">Remarcadas</div><div id="antiKpiRemarcadas" class="kpi-value">0</div><div class="kpi-note">Reuniões remarcadas</div></div>
       <div class="card"><div class="kpi-label">Análise de reuniões</div><div id="antiKpiAnalise" class="kpi-value">0</div><div class="kpi-note">Reuniões avaliadas</div></div>
       <div class="card"><div class="kpi-label">Trilha de desenvolvimento</div><div id="antiKpiTrilha" class="kpi-value">0</div><div class="kpi-note">Planos ativos</div></div>
       <div class="card overdue-kpi-card"><div class="kpi-label">Atividades atrasadas</div><button class="overdue-dashboard-btn" onclick="abrirAba('gestao')"><span id="antiKpiAtrasadas">0</span></button><div class="kpi-note">Clique para abrir Gestão de Atividades</div></div>
@@ -1044,19 +1048,27 @@ function dedupReunioesGlobal(){
     if(!mapa[k]){
       mapa[k] = r;
     } else {
-      // Manter o que tem origemId (PipeRun) ou o mais completo
       const atual = mapa[k];
-      if(r.origemId && !atual.origemId) mapa[k] = r;
-      else if(!r.origemId && atual.origemId) {} // manter atual
-      else if(r.origemId && atual.origemId){
-        // Ambos do PipeRun — manter o de menor ID (mais antigo/original)
-        if(String(r.origemId) < String(atual.origemId)) mapa[k] = r;
-      }
+      // Contar checks preenchidos de cada versão
+      const checksR    = (r.checks||[]).filter(Boolean).length;
+      const checksAtual = (atual.checks||[]).filter(Boolean).length;
+      let vencedor;
+      if(r.origemId && !atual.origemId)       vencedor = r;
+      else if(!r.origemId && atual.origemId)  vencedor = atual;
+      else if(r.origemId && atual.origemId)   vencedor = String(r.origemId) < String(atual.origemId) ? r : atual;
+      else                                     vencedor = checksR >= checksAtual ? r : atual;
+      // Preservar os checks da versão mais completa independente de qual ganhou
+      const checksFinais = checksR >= checksAtual ? (r.checks||[]) : (atual.checks||[]);
+      // Preservar statusReuniao se algum tiver status diferente de Agendada
+      const statusFinal = (r.statusReuniao && r.statusReuniao !== 'Agendada') ? r.statusReuniao :
+                          (atual.statusReuniao && atual.statusReuniao !== 'Agendada') ? atual.statusReuniao :
+                          vencedor.statusReuniao;
+      mapa[k] = {...vencedor, checks: checksFinais, statusReuniao: statusFinal};
     }
   });
   const antes = reunioes.length;
   reunioes = Object.values(mapa);
-  return antes - reunioes.length; // quantidade removida
+  return antes - reunioes.length;
 }
 
 function limparDuplicatasManual(){
@@ -1090,7 +1102,8 @@ function salvarAtualizacoesDashboard(){salvar();localStorage.setItem('gaiga_ulti
 function syncFrancisco(){francisco=francisco.filter(f=>{const r=reunioes.find(x=>x.id===f.origemId);return r&&r.franciscoAtivo&&prob(r)>=85&&!franciscoExcluidos.includes(r.id)});antiReunioesBase().filter(r=>r.franciscoAtivo&&prob(r)>=85&&!franciscoExcluidos.includes(r.id)).forEach(r=>{let obj=francisco.find(f=>f.origemId===r.id);if(!obj){obj={id:uid(),origemId:r.id,checks:{}};francisco.push(obj)}obj.empresa=r.empresa;obj.assunto=r.assunto||r.oportunidade;obj.data=r.data;obj.hora=r.hora;obj.consultor=r.consultor;obj.tipo=r.tipo||'Online';etapasFrancisco(obj).forEach(e=>{if(obj.checks[e]===undefined)obj.checks[e]=false})})}
 function toggleSidebar(){document.body.classList.toggle('sidebar-collapsed');localStorage.setItem('gaiga_sidebar_collapsed',document.body.classList.contains('sidebar-collapsed')?'1':'0')}
 if(localStorage.getItem('gaiga_sidebar_collapsed')==='1'){document.body.classList.add('sidebar-collapsed')}
-function abrirAba(id){document.querySelectorAll('.nav button,.section').forEach(x=>x.classList.remove('active'));document.querySelector(`.nav button[data-tab="${id}"]`)?.classList.add('active');document.getElementById(id)?.classList.add('active');setTimeout(renderCharts,80)}
+function abrirAba(id){document.querySelectorAll('.nav button,.section').forEach(x=>x.classList.remove('active'));document.querySelector(`.nav button[data-tab="${id}"]`)?.classList.add('active');document.getElementById(id)?.classList.add('active');setTimeout(renderCharts,80);// Re-renderizar aba gestao para garantir dados do banco
+if(id==='gestao'){setTimeout(function(){renderGestao&&renderGestao();renderCalendarioMestre&&renderCalendarioMestre();},100);}}
 document.querySelectorAll('.nav button').forEach(btn=>btn.onclick=()=>abrirAba(btn.dataset.tab));
 document.getElementById('formReuniao').addEventListener('submit',e=>{e.preventDefault();reunioes.push({id:uid(),empresa:empresa.value.trim(),assunto:assunto.value.trim(),oportunidade:assunto.value.trim(),tipoAtividade:tipoAtividadeReuniao.value,data:data.value,hora:hora.value,dataAgendamento:dataAgendamento.value,consultor:consultor.value.trim(),tipo:tipoReuniao.value,checks:Array(etapas.length).fill(false)});e.target.reset();salvar();render()});
 const formAnaliseReuniao=document.getElementById('formAnaliseReuniao');
@@ -1100,11 +1113,19 @@ function toggleCheck(id,i){const r=reunioes.find(x=>x.id===id);if(!r)return;r.ch
 function toggleFollowCheck(id,i){const f=followups.find(x=>x.id===id);if(!f)return;f.checks[i]=!f.checks[i];salvar();render()}
 function toggleFranciscoCheck(id,etapa){const f=francisco.find(x=>x.id===id);if(!f)return;f.checks[etapa]=!f.checks[etapa];salvar();render()}
 function toggleFranciscoSolicitado(id){const r=reunioes.find(x=>x.id===id);if(!r)return;r.franciscoAtivo=!r.franciscoAtivo;if(r.franciscoAtivo){franciscoExcluidos=franciscoExcluidos.filter(x=>x!==id)}else{francisco=francisco.filter(f=>f.origemId!==id)}salvar();render()}
-function marcarRealizada(id){const r=reunioes.find(x=>x.id===id);if(!r)return;r.realizada=true;r.statusReuniao='Realizada';if(!followups.some(f=>f.origemId===id)){followups.push({id:uid(),origemId:id,empresa:r.empresa,assunto:r.assunto||r.oportunidade,dataReuniao:r.data,horaReuniao:r.hora,consultor:r.consultor,tipo:r.tipo,checks:Array(etapasFollow.length).fill(false),criadoEm:new Date().toISOString().slice(0,10)})}if(!avaliacoes[id])avaliacoes[id]={};salvar();render();alert('Reunião marcada como realizada. Empresa enviada para Análise de reuniões e Follow up.')}
+function marcarRealizada(id){const r=reunioes.find(x=>x.id===id);if(!r)return;r.realizada=true;r.statusReuniao='Realizada';followups=followups.filter(f=>f.origemId!==id);followups.push({id:uid(),origemId:id,empresa:r.empresa,assunto:r.assunto||r.oportunidade,dataReuniao:r.data,horaReuniao:r.hora,consultor:r.consultor,tipo:r.tipo,checks:Array(etapasFollow.length).fill(false),criadoEm:new Date().toISOString().slice(0,10)});if(!avaliacoes[id])avaliacoes[id]={};salvar();render();alert('Reunião marcada como realizada. Empresa enviada para Análise de reuniões e Follow up.')}
 function alternarRealizada(id){const r=reunioes.find(x=>x.id===id);if(!r)return;if(r.realizada){if(!confirm('Deseja desmarcar esta reunião como realizada? Ela sairá de Análise de reuniões e do Follow up.'))return;r.realizada=false;r.statusReuniao='Agendada';followups=followups.filter(f=>f.origemId!==id);delete avaliacoes[id];delete escutas[id];trilhas=trilhas.filter(t=>t.origemId!==id);salvar();render();return}marcarRealizada(id)}
 
 function marcarNoShow(id){const r=reunioes.find(x=>x.id===id);if(!r)return;if(r.statusReuniao==='No-show'){if(!confirm('Deseja desfazer o No-show desta reunião?'))return;r.statusReuniao='Agendada';r.motivoNoShow='';salvar();render();return;}abrirJustif('noshow',id);}
-function marcarCancelada(id){const r=reunioes.find(x=>x.id===id);if(!r)return;if(r.statusReuniao==='Cancelada'){if(!confirm('Deseja desfazer o cancelamento desta reunião?'))return;r.statusReuniao='Agendada';r.motivoCancelamento='';salvar();render();return;}abrirJustif('cancelada',id);}function remover(id){if(confirm('Deseja remover esta reunião?')){reunioes=reunioes.filter(r=>r.id!==id);followups=followups.filter(f=>f.origemId!==id);francisco=francisco.filter(f=>f.origemId!==id);franciscoExcluidos=franciscoExcluidos.filter(x=>x!==id);escutasExcluidas=escutasExcluidas.filter(x=>x!==id);delete avaliacoes[id];delete escutas[id];trilhas=trilhas.filter(t=>t.origemId!==id);salvar();render()}}
+function marcarCancelada(id){const r=reunioes.find(x=>x.id===id);if(!r)return;if(r.statusReuniao==='Cancelada'){if(!confirm('Deseja desfazer o cancelamento desta reunião?'))return;r.statusReuniao='Agendada';r.motivoCancelamento='';salvar();render();return;}abrirJustif('cancelada',id);}function marcarRemarcada(id){
+  const r=reunioes.find(x=>x.id===id);if(!r)return;
+  if(r.statusReuniao==='Remarcada'){
+    if(!confirm('Deseja desfazer a remarcação?'))return;
+    r.statusReuniao='Agendada';r.motivoRemarcacao='';salvar();render();return;
+  }
+  abrirJustif('remarcada',id);
+}
+function remover(id){if(confirm('Deseja remover esta reunião?')){reunioes=reunioes.filter(r=>r.id!==id);followups=followups.filter(f=>f.origemId!==id);francisco=francisco.filter(f=>f.origemId!==id);franciscoExcluidos=franciscoExcluidos.filter(x=>x!==id);escutasExcluidas=escutasExcluidas.filter(x=>x!==id);delete avaliacoes[id];delete escutas[id];trilhas=trilhas.filter(t=>t.origemId!==id);salvar();render()}}
 function antiReunioesBase(){return reunioes.filter(r=>!r.manualAnalise)}
 function dataObjFiltro(o){if(!o)return null;const data=o.data||o.dataReuniao||o.dataAnalise||'';const hora=o.hora||o.horaReuniao||o.horario||'';if(!data)return null;const dt=new Date(`${data}T${hora||'00:00'}`);return isNaN(dt)?null:dt}
 function semanaISO(dt){const d=new Date(Date.UTC(dt.getFullYear(),dt.getMonth(),dt.getDate()));const day=d.getUTCDay()||7;d.setUTCDate(d.getUTCDate()+4-day);const yearStart=new Date(Date.UTC(d.getUTCFullYear(),0,1));const week=Math.ceil((((d-yearStart)/86400000)+1)/7);return `${d.getUTCFullYear()}-W${String(week).padStart(2,'0')}`}
@@ -1131,21 +1152,22 @@ function antiReunioes(){return antiReunioesBase().filter(passaFiltroGlobal)}
 function filtradas(){const c=fConsultor.value,s=fStatus.value,b=fBusca.value.toLowerCase();return antiReunioes().filter(r=>(!c||r.consultor===c)&&(!s||status(r)===s)&&(!b||String(r.empresa||'').toLowerCase().includes(b)||String(r.assunto||r.oportunidade||'').toLowerCase().includes(b))).sort((a,b)=>dataHoraValor(a)-dataHoraValor(b))}
 function renderKpisAnti(){
   const base = antiReunioes();
-  const set = el => { if(el) el.textContent = el._val; };
   const up = (id, val) => { const el=document.getElementById(id); if(el) el.textContent=val; };
-  up('antiKpiTotal',     base.length);
-  up('antiKpiFrancisco', base.filter(r=>r.franciscoAtivo && prob(r)>=85).length);
-  up('antiKpiNoShow',    base.filter(isNoShow).length);
-  up('antiKpiCanceladas',base.filter(isCancelada).length);
+  up('antiKpiTotal',      base.length);
+  up('antiKpiFrancisco',  base.filter(r=>r.franciscoAtivo && prob(r)>=85).length);
+  up('antiKpiNoShow',     base.filter(isNoShow).length);
+  up('antiKpiCanceladas', base.filter(isCancelada).length);
   const probs = base.filter(r=>!r.realizada&&!isCancelada(r)&&!isNoShow(r));
   const media = probs.length ? Math.round(probs.reduce((s,r)=>s+prob(r),0)/probs.length) : 0;
-  up('antiKpiProb',      media + '%');
-  up('antiKpiAnalise',   realizadas().length);
-  up('antiKpiTrilha',    trilhas.filter(passaFiltroGlobal).filter(t=>t.status!=='Concluído').length);
+  up('antiKpiProb',       media + '%');
+  up('antiKpiRealizadas', base.filter(r=>r.realizada).length);
+  up('antiKpiRemarcadas', base.filter(r=>r.statusReuniao==='Remarcada').length);
+  up('antiKpiAnalise',    realizadas().length);
+  up('antiKpiTrilha',     trilhas.filter(passaFiltroGlobal).filter(t=>t.status!=='Concluído').length);
   const atrasadas = gerarTarefasGestao ? gerarTarefasGestao().filter(t=>!t.done&&t.prazo<new Date()).length : 0;
-  up('antiKpiAtrasadas', atrasadas);
+  up('antiKpiAtrasadas',  atrasadas);
 }
-function renderLista(){const dados=filtradas();if(!dados.length){listaArea.innerHTML='<div class="empty">Nenhuma reunião encontrada para os filtros selecionados.</div>';return}listaArea.innerHTML=`<div class="table-wrap"><table><thead><tr><th>Empresa</th><th>Oportunidade</th><th>Data de agendamento</th><th>Data/Hora da reunião</th><th>Consultor</th><th>Formato</th><th>Checklist</th><th>Probabilidade</th><th>Status</th><th>Ações</th></tr></thead><tbody>${dados.map(r=>{const p=prob(r),st=r.realizada?'Realizada':status(r);const franciscoElegivel=r.franciscoAtivo&&p>=85;return `<tr class="${(!r.realizada&&p<60)?'at-risk':''}"><td><strong>${escapar(r.empresa)}</strong>${r.franciscoAtivo?'<br><span class="tag">Francisco solicitado</span>':''}${franciscoElegivel?'<br><span class="status ok" style="margin-top:8px">Enviado ao Francisco</span>':''}${r.realizada?'<br><span class="status ok" style="margin-top:8px">Reunião realizada</span>':''}${r.tecnicoDefinido?'<br><span class="tag" style="margin-top:8px">Técnico: '+escapar(r.tecnicoDefinido)+'</span>':''}</td><td>${escapar(r.assunto||r.oportunidade||'-')}<br><span class="tag">${escapar(r.tipoAtividade||'Reunião Agendada')}</span></td><td>${formatDate(r.dataAgendamento)}</td><td>${formatDate(r.data)}<br><span style="color:var(--muted)">${escapar(r.hora||'-')}</span></td><td>${escapar(r.consultor||'-')}</td><td>${escapar(r.tipo||'Online')}</td><td><div class="checklist">${etapasAntiComIndice(r).map(({e,i})=>`<label class="check-item ${(r.checks||[])[i]?'done':'pending'}"><input type="checkbox" ${(r.checks||[])[i]?'checked':''} onchange="toggleCheck('${r.id}',${i})"><span>${e}</span></label>`).join('')}${!isPrimeiraReuniao(r)?'<span class="checklist-note">Perguntas de filtragem e material prévio são obrigatórios apenas na 1ª reunião.</span>':''}</div></td><td><strong>${p}%</strong><div class="bar"><span style="width:${p}%"></span></div><div class="subtle" style="margin-top:6px">Francisco: ${r.franciscoAtivo?(p>=85?'liberado':'aguardando 85%'):'não marcado'}</div></td><td><span class="status ${r.realizada?'ok':(r.statusReuniao==='No-show'?'danger':(r.statusReuniao==='Cancelada'?'warn':statusClass(st)))}">${r.realizada?'Realizada':(r.statusReuniao==='No-show'?'No-show':(r.statusReuniao==='Cancelada'?'Cancelada':st))}</span></td><td><div class="button-stack"><button class="btn ${r.franciscoAtivo?'francisco-on':'francisco-off'} small" onclick="toggleFranciscoSolicitado('${r.id}')">Francisco</button>${!r.franciscoAtivo?`<button class="btn ${r.realizada?'':'primary'} small" onclick="alternarRealizada('${r.id}')">${r.realizada?'Desmarcar realizada':'Reunião realizada'}</button>`:''}<button class="btn btn-noshow small" onclick="marcarNoShow('${r.id}')">No-show</button><button class="btn btn-cancelada small" onclick="marcarCancelada('${r.id}')">Reunião cancelada</button><button class="delete small" onclick="remover('${r.id}')">Excluir</button></div></td></tr>`}).join('')}</tbody></table></div>`}
+function renderLista(){const dados=filtradas();if(!dados.length){listaArea.innerHTML='<div class="empty">Nenhuma reunião encontrada para os filtros selecionados.</div>';return}listaArea.innerHTML=`<div class="table-wrap"><table><thead><tr><th>Empresa</th><th>Oportunidade</th><th>Data de agendamento</th><th>Data/Hora da reunião</th><th>Consultor</th><th>Formato</th><th>Checklist</th><th>Probabilidade</th><th>Status</th><th>Ações</th></tr></thead><tbody>${dados.map(r=>{const p=prob(r),st=r.realizada?'Realizada':status(r);const franciscoElegivel=r.franciscoAtivo&&p>=85;return `<tr class="${(!r.realizada&&p<60)?'at-risk':''}"><td><strong>${escapar(r.empresa)}</strong>${r.franciscoAtivo?'<br><span class="tag">Francisco solicitado</span>':''}${franciscoElegivel?'<br><span class="status ok" style="margin-top:8px">Enviado ao Francisco</span>':''}${r.realizada?'<br><span class="status ok" style="margin-top:8px">Reunião realizada</span>':''}${r.tecnicoDefinido?'<br><span class="tag" style="margin-top:8px">Técnico: '+escapar(r.tecnicoDefinido)+'</span>':''}</td><td>${escapar(r.assunto||r.oportunidade||'-')}<br><span class="tag">${escapar(r.tipoAtividade||'Reunião Agendada')}</span></td><td>${formatDate(r.dataAgendamento)}</td><td>${formatDate(r.data)}<br><span style="color:var(--muted)">${escapar(r.hora||'-')}</span></td><td>${escapar(r.consultor||'-')}</td><td>${escapar(r.tipo||'Online')}</td><td><div class="checklist">${etapasAntiComIndice(r).map(({e,i})=>`<label class="check-item ${(r.checks||[])[i]?'done':'pending'}"><input type="checkbox" ${(r.checks||[])[i]?'checked':''} onchange="toggleCheck('${r.id}',${i})"><span>${e}</span></label>`).join('')}${!isPrimeiraReuniao(r)?'<span class="checklist-note">Perguntas de filtragem e material prévio são obrigatórios apenas na 1ª reunião.</span>':''}</div></td><td><strong>${p}%</strong><div class="bar"><span style="width:${p}%"></span></div><div class="subtle" style="margin-top:6px">Francisco: ${r.franciscoAtivo?(p>=85?'liberado':'aguardando 85%'):'não marcado'}</div></td><td><span class="status ${r.realizada?'ok':(r.statusReuniao==='No-show'?'danger':(r.statusReuniao==='Cancelada'?'warn':(r.statusReuniao==='Remarcada'?'remarcada':statusClass(st))))}">${r.realizada?'Realizada':(r.statusReuniao==='No-show'?'No-show':(r.statusReuniao==='Cancelada'?'Cancelada':(r.statusReuniao==='Remarcada'?'Remarcada':st)))}</span></td><td><div class="button-stack"><button class="btn ${r.franciscoAtivo?'francisco-on':'francisco-off'} small" onclick="toggleFranciscoSolicitado('${r.id}')">Francisco</button>${!r.franciscoAtivo?`<button class="btn ${r.realizada?'':'primary'} small" onclick="alternarRealizada('${r.id}')">${r.realizada?'Desmarcar realizada':'Reunião realizada'}</button>`:''}<button class="btn btn-noshow small" onclick="marcarNoShow('${r.id}')">No-show</button><button class="btn btn-cancelada small" onclick="marcarCancelada('${r.id}')">Reunião cancelada</button><button class="btn btn-remarcada small" onclick="marcarRemarcada('${r.id}')">${r.statusReuniao==='Remarcada'?'Desfazer remarcação':'Remarcada'}</button><button class="delete small" onclick="remover('${r.id}')">Excluir</button></div></td></tr>`}).join('')}</tbody></table></div>`}
 function franciscoFiltradas(){return filtrarGlobalLista(francisco).sort((a,b)=>dataHoraValor(a)-dataHoraValor(b))}
 function renderFrancisco(){const dados=franciscoFiltradas();if(!dados.length){franciscoArea.innerHTML='<div class="empty">Nenhuma reunião foi marcada com o botão Francisco e atingiu 85% no Anti No-show ainda.</div>';return}franciscoArea.innerHTML=`<div class="table-wrap"><table><thead><tr><th>Empresa</th><th>Oportunidade</th><th>Data/Hora</th><th>Consultor</th><th>Formato</th><th>Acompanhamento</th><th>Avanço</th><th>Status</th><th>Ações</th></tr></thead><tbody>${dados.map(f=>{const p=probFrancisco(f),st=p===100?'Completo':(p>=50?'Em andamento':'Pendente');return `<tr class="${p<100?'at-risk':''}"><td><strong>${escapar(f.empresa)}</strong></td><td>${escapar(f.assunto||'-')}</td><td>${formatDate(f.data)}<br><span style="color:var(--muted)">${escapar(f.hora||'-')}</span></td><td>${escapar(f.consultor||'-')}</td><td>${escapar(f.tipo||'Online')}</td><td><div class="checklist">${etapasFrancisco(f).map(e=>`<label class="check-item ${f.checks&&f.checks[e]?'done':'pending'}"><input type="checkbox" ${f.checks&&f.checks[e]?'checked':''} onchange="toggleFranciscoCheck('${f.id}','${e}')"><span>${e}</span></label>`).join('')}</div></td><td><strong>${p}%</strong><div class="bar"><span style="width:${p}%"></span></div></td><td><span class="status ${statusClass(st)}">${st}</span></td><td><div class="button-stack"><button class="btn primary small" onclick="marcarFranciscoRealizada('${f.id}')">Reunião realizada</button><button class="delete small" onclick="deletarFrancisco('${f.id}')">Deletar</button></div></td></tr>`}).join('')}</tbody></table></div>`}
 function deletarFrancisco(id){if(!confirm('Deseja deletar esta reunião apenas da aba Reuniões Francisco?'))return;const f=francisco.find(x=>x.id===id);if(f&&f.origemId){franciscoExcluidos=[...new Set([...franciscoExcluidos,f.origemId])];const r=reunioes.find(x=>x.id===f.origemId);if(r)r.franciscoAtivo=false;}francisco=francisco.filter(f=>f.id!==id);salvar();render()}
@@ -1263,7 +1285,7 @@ function prazoInfo(dt,done){if(done)return{classe:'ok',txt:'Concluído'};const a
 function gerarTarefasGestao(){const tarefas=[];francisco.forEach(f=>{const dt=dataObj(f);if(!dt)return;[
   ['Relatório enviado supervisão | Técnico (D-2)','Relatório supervisão | técnico',addDias(dt,-2)],
   ['Alinhamento técnico 30min antes','Alinhamento estratégico 30min antes',addMin(dt,-30)]
-].forEach(([check,titulo,prazo])=>tarefas.push({id:`francisco-${f.id}-${normalizarChave(check)}`,tipo:'Pré-reunião Francisco',empresa:f.empresa,assunto:f.assunto,consultor:f.consultor,prazo,done:!!(f.checks&&f.checks[check]),acao:`toggleFranciscoCheck('${f.id}','${check}')`,titulo}));});realizadas().forEach(r=>{const dt=dataObj(r);if(!dt)return;const av=avaliacoes[r.id]||{};tarefas.push({id:`feedback-${r.id}`,tipo:'Pós-reunião',empresa:r.empresa,assunto:r.assunto||r.oportunidade,consultor:r.consultor,prazo:addMin(dt,20),done:!!String(av.feedbackConsultor||'').trim(),acao:`toggleFeedbackCheck('${r.id}')`,titulo:'Feedback ao consultor em até 20 minutos'});});return tarefas.sort((a,b)=>a.prazo-b.prazo)}
+].forEach(([check,titulo,prazo])=>tarefas.push({id:`francisco-${f.id}-${normalizarChave(check)}`,tipo:'Pré-reunião Francisco',empresa:f.empresa,assunto:f.assunto,consultor:f.consultor,prazo,done:!!(f.checks&&f.checks[check]),acao:`toggleFranciscoCheck('${f.id}','${check}')`,titulo}));});const _idsFeeds=new Set();const _limite30=new Date();_limite30.setDate(_limite30.getDate()-30);realizadas().forEach(r=>{if(_idsFeeds.has(r.id))return;const dt=dataObj(r);if(!dt||dt<_limite30)return;_idsFeeds.add(r.id);const av=avaliacoes[r.id]||{};tarefas.push({id:`feedback-${r.id}`,tipo:'Pós-reunião',empresa:r.empresa,assunto:r.assunto||r.oportunidade,consultor:r.consultor,prazo:addMin(dt,20),done:!!String(av.feedbackConsultor||'').trim(),acao:`toggleFeedbackCheck('${r.id}')`,titulo:'Feedback ao consultor em até 20 minutos'});});return tarefas.sort((a,b)=>a.prazo-b.prazo)}
 function toggleFeedbackCheck(id){if(!avaliacoes[id])avaliacoes[id]={};avaliacoes[id].feedbackConsultor=String(avaliacoes[id].feedbackConsultor||'').trim()?'':'Feedback realizado com o consultor em até 20 minutos após a reunião.';salvar();render()}
 function semanaKey(date=new Date()){const d=new Date(date);const onejan=new Date(d.getFullYear(),0,1);const week=Math.ceil((((d-onejan)/86400000)+onejan.getDay()+1)/7);return `${d.getFullYear()}-S${String(week).padStart(2,'0')}`}
 function isoDate(d=new Date()){return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10)}
@@ -1279,7 +1301,22 @@ function setVisaoCalendario(visao){calendarioVisao=visao;calendarioOffset=0;rend
 function alterarPeriodoCalendario(delta){calendarioOffset+=delta;renderRotinaSemanal()}
 function setDataTreinamento(id,valor){const t=trilhas.find(x=>x.id===id);if(!t)return;t.dataTreinamento=valor;t.atualizadoEm=new Date().toISOString();salvar();render()}
 
-function atualizarObsGestao(id,valor){obsGestao[id]=valor;salvar()}
+var _obsDebounce={};
+function atualizarObsGestao(id,valor){
+  obsGestao[id]=valor;
+  salvar();
+  // Salvar no banco com debounce de 1.5s
+  clearTimeout(_obsDebounce[id]);
+  _obsDebounce[id]=setTimeout(async function(){
+    if(!_sbUser) return;
+    try{
+      await _sb.from('obs_gestao').upsert({
+        id: id, user_id: _sbUser.id, observacao: valor||'',
+        updated_at: new Date().toISOString()
+      },{onConflict:'id'});
+    }catch(e){ console.error('Erro ao salvar obs:', e); }
+  }, 1500);
+}
 function enviarFeedbackGestao(id){
   const tarefas=gerarTarefasGestao();
   const t=tarefas.find(x=>x.id===id);
@@ -1321,7 +1358,13 @@ function checklistStats(tipo){const itens=itensChecklist(tipo);const done=rotina
 function classePct(pct){return pct>=80?'good':(pct>=50?'attention':'critical')}
 function renderResumoChecklist(){const labels={diario:'Dia',semanal:'Semana',mensal:'Mês'};return `<div class="exec-summary-grid">${['diario','semanal','mensal'].map(tipo=>{const st=checklistStats(tipo);return `<div class="exec-summary-card ${classePct(st.pct)} ${checklistPeriodoAtivo===tipo?'active':''}" onclick="setChecklistPeriodo('${tipo}')"><strong>${labels[tipo]}</strong><div class="exec-percent">${st.pct}%</div><div class="exec-meta">${st.feitos} de ${st.total} atividades realizadas</div><div class="exec-progress"><span style="width:${st.pct}%"></span></div></div>`}).join('')}</div>`}
 function renderChecklistPeriodo(tipo){const st=checklistStats(tipo),itens=st.itens,done=st.done;const hoje=isoDate(new Date());return `<div class="exec-check-section ${checklistPeriodoAtivo===tipo?'active':''}" id="check_${tipo}"><div class="exec-active-panel"><div><h4>${tituloPeriodo(tipo)}</h4><p>${st.feitos} de ${st.total} atividades realizadas neste período. No diário, cada compromisso do Cronograma Mestre aparece separado, com data e check individual para concluir uma atividade sem concluir as demais.</p></div><div class="exec-percent">${st.pct}%</div></div><div class="routine-mini-grid">${itens.map((r,i)=>`<div class="routine-mini ${done[i]?'done':'pending'}"><div class="meta-label">Data: ${formatDate(r.data||hoje)}</div><h4>${escapar(r.titulo)}</h4><p>${escapar(r.desc)}</p><button class="btn small ${done[i]?'primary':''}" style="margin-top:12px" onclick="toggleRotina('${tipo}',${i})">${done[i]?'Reabrir atividade':'Concluir atividade'}</button></div>`).join('')}</div></div>`}
-function estadoAtividadeCalendario(id){return calendarioAtividades[id]||{done:false,descricao:''}}
+function estadoAtividadeCalendario(id){
+  // Buscar pelo ID exato ou por substring (caso o formato mude ligeiramente)
+  if(calendarioAtividades[id]) return calendarioAtividades[id];
+  // Tentar match parcial pelo ID base (sem a data)
+  var chave = Object.keys(calendarioAtividades).find(function(k){ return k === id; });
+  return chave ? calendarioAtividades[chave] : {done:false,descricao:''};
+}
 function eventosCalendario(data){
   const eventos=[];const dataIso=isoDate(data);const dias=['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];const bloco=cronogramaMestre.find(d=>d.dia===dias[data.getDay()]);
   (bloco?.slots||[]).forEach((s,idx)=>eventos.push({id:`master-${dataIso}-${idx}-${normalizarChave(s.titulo)}`,tipo:'master',titulo:s.titulo,desc:`${s.hora} · ${s.entrega}`,data:dataIso,hora:s.hora,entrega:s.entrega,detalhe:s.desc,categoria:'Cronograma Mestre'}));
@@ -1336,7 +1379,24 @@ function statsProdutividadeCalendario(){const eventos=eventosPeriodoCalendario()
 function renderDashboardProdutividadeCalendario(){const st=statsProdutividadeCalendario();const periodo=calendarioVisao==='dia'?'do dia':(calendarioVisao==='semana'?'da semana':'do mês');return `<div class="calendar-productivity-grid"><div class="calendar-productivity-card highlight"><strong>Produtividade ${periodo}</strong><div class="big">${st.pct}%</div><div class="exec-progress"><span style="width:${st.pct}%"></span></div></div><div class="calendar-productivity-card"><strong>Atividades previstas</strong><div class="big">${st.total}</div><div class="small">Cronograma + trilhas</div></div><div class="calendar-productivity-card"><strong>Concluídas</strong><div class="big">${st.concluidos}</div><div class="small">Marcadas como realizadas</div></div><div class="calendar-productivity-card"><strong>Pendentes</strong><div class="big">${st.pendentes}</div><div class="small">Ainda abertas</div></div></div>`}
 function abrirCadastroAtividadeCalendario(id){const e=calendarioEventosCache[id]||eventosPeriodoCalendario().find(x=>x.id===id);if(!e)return;calendarioEventosCache[id]=e;const st=estadoAtividadeCalendario(id);document.getElementById('modalAtividadeId').value=id;document.getElementById('modalAtividadeTitulo').textContent=e.titulo||'Atividade de gestão';document.getElementById('modalAtividadeSubtitulo').textContent='Cadastro da atividade no calendário de gestão.';document.getElementById('modalAtividadeInfo').innerHTML=`<div class="activity-info"><span>Data</span><b>${formatDate(e.data)}</b></div><div class="activity-info"><span>Horário</span><b>${escapar(e.hora||'-')}</b></div><div class="activity-info"><span>Tipo</span><b>${escapar(e.categoria||e.tipo||'-')}</b></div><div class="activity-info"><span>Entrega esperada</span><b>${escapar(e.entrega||'-')}</b></div>${e.consultor?`<div class="activity-info"><span>Consultor</span><b>${escapar(e.consultor)}</b></div>`:''}${e.empresa?`<div class="activity-info"><span>Empresa</span><b>${escapar(e.empresa)}</b></div>`:''}<div class="activity-info" style="grid-column:1/-1"><span>Descrição original</span><b>${escapar(e.detalhe||e.desc||'-')}</b></div>`;document.getElementById('modalAtividadeDescricao').value=st.descricao||'';document.getElementById('modalAtividadeConcluida').checked=!!st.done;document.getElementById('modalAtividadeCalendario').classList.add('open')}
 function fecharCadastroAtividadeCalendario(ev){if(ev&&ev.target&&ev.target.id!=='modalAtividadeCalendario')return;document.getElementById('modalAtividadeCalendario')?.classList.remove('open')}
-function salvarCadastroAtividadeCalendario(){const id=document.getElementById('modalAtividadeId').value;if(!id)return;calendarioAtividades[id]={...(calendarioAtividades[id]||{}),done:document.getElementById('modalAtividadeConcluida').checked,descricao:document.getElementById('modalAtividadeDescricao').value,atualizadoEm:new Date().toISOString()};salvar();fecharCadastroAtividadeCalendario();render()}
+function salvarCadastroAtividadeCalendario(){const id=document.getElementById('modalAtividadeId').value;if(!id)return;calendarioAtividades[id]={...(calendarioAtividades[id]||{}),done:document.getElementById('modalAtividadeConcluida').checked,descricao:document.getElementById('modalAtividadeDescricao').value,atualizadoEm:new Date().toISOString()};
+  salvar();
+  fecharCadastroAtividadeCalendario();
+  render();
+  // Salvar este evento no banco imediatamente
+  if(_sbUser){
+    const calEntry = calendarioAtividades[id];
+    _sb.from('calendario_atividades').upsert({
+      id: id, user_id: _sbUser.id,
+      done: calEntry.done||false,
+      descricao: calEntry.descricao||'',
+      atualizado_em: calEntry.atualizadoEm||new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    },{onConflict:'id'}).then(function(res){
+      if(res.error) console.error('Erro ao salvar cal:', res.error);
+    });
+  }
+}
 function renderCalendarioMestre(){calendarioEventosCache={};const base=baseCalendario();let titulo='',acoes='',grid='',classe='';const diasUteis=['Seg','Ter','Qua','Qui','Sex'];const tabs=`<div class="calendar-filter-tabs"><button class="${calendarioVisao==='dia'?'active':''}" onclick="setVisaoCalendario('dia')">Dia</button><button class="${calendarioVisao==='semana'?'active':''}" onclick="setVisaoCalendario('semana')">Semana</button><button class="${calendarioVisao==='mes'?'active':''}" onclick="setVisaoCalendario('mes')">Mês</button></div>`;
   if(calendarioVisao==='dia'){
     const dia=ajustarParaDiaUtil(base);
@@ -1391,6 +1451,10 @@ function renderDashboardCompleto(){
   const atrasadas=gerarTarefasGestao().filter(t=>!t.done&&t.prazo<new Date()).length;
   const elNo=document.getElementById('kpiNoShowDash'); if(elNo) elNo.textContent=noShow;
   const elCa=document.getElementById('kpiCanceladasDash'); if(elCa) elCa.textContent=canceladas;
+  const realizadasCount=base.filter(r=>r.realizada).length;
+  const remarcadasCount=base.filter(r=>r.statusReuniao==='Remarcada').length;
+  const elRe=document.getElementById('kpiRealizadasDash'); if(elRe) elRe.textContent=realizadasCount;
+  const elRm=document.getElementById('kpiRemarcadasDash'); if(elRm) elRm.textContent=remarcadasCount;
   const elAn=document.getElementById('kpiAnaliseDash'); if(elAn) elAn.textContent=analises;
   const elTr=document.getElementById('kpiTrilhaDash'); if(elTr) elTr.textContent=trilhaAtivos;
   const elAt=document.getElementById('kpiAtividadesAtrasadasDash'); if(elAt) elAt.textContent=atrasadas;
@@ -2006,12 +2070,12 @@ function abrirDashModal(tipo){
       .sort((a,b) => dataHoraValor(b)-dataHoraValor(a));
     count = dados.length;
     sub.textContent = count + ' reuni\u00f5es classificadas como no-show';
-    html = `<div class="dash-col-header row-4"><span>Empresa</span><span>Consultor</span><span>Data / Hora</span><span>Tipo</span></div>`;
+    html = `<div class="dash-col-header row-4"><span>Empresa</span><span>Consultor</span><span>Data / Hora</span><span>Motivo</span></div>`;
     html += dados.map(r => `<div class="dash-row row-4">
-      <div><div class="r-empresa">${escapar(r.empresa)}</div><div class="r-sub">${escapar(r.assunto||'-')}</div></div>
+      <div><div class="r-empresa">${escapar(r.empresa)}</div><div class="r-sub">${escapar(r.assunto||'-')}</div><span class="r-badge danger" style="margin-top:6px;display:inline-block">No-show</span></div>
       <div><div class="r-val">${escapar(r.consultor||'-')}</div></div>
       <div><div class="r-val">${fmtData(r.data)} ${r.hora||''}</div></div>
-      <div><span class="r-badge danger">No-show</span></div>
+      <div><div class="r-val">${r.motivoNoShow ? escapar(r.motivoNoShow) : '<em style="color:var(--muted)">Não informado</em>'}</div></div>
     </div>`).join('');
 
   } else if(tipo === 'canceladas'){
@@ -2020,12 +2084,12 @@ function abrirDashModal(tipo){
       .sort((a,b) => dataHoraValor(b)-dataHoraValor(a));
     count = dados.length;
     sub.textContent = count + ' reuni\u00f5es canceladas';
-    html = `<div class="dash-col-header row-4"><span>Empresa</span><span>Consultor</span><span>Data / Hora</span><span>Tipo</span></div>`;
+    html = `<div class="dash-col-header row-4"><span>Empresa</span><span>Consultor</span><span>Data / Hora</span><span>Motivo</span></div>`;
     html += dados.map(r => `<div class="dash-row row-4">
-      <div><div class="r-empresa">${escapar(r.empresa)}</div><div class="r-sub">${escapar(r.assunto||'-')}</div></div>
+      <div><div class="r-empresa">${escapar(r.empresa)}</div><div class="r-sub">${escapar(r.assunto||'-')}</div><span class="r-badge warn" style="margin-top:6px;display:inline-block">Cancelada</span></div>
       <div><div class="r-val">${escapar(r.consultor||'-')}</div></div>
       <div><div class="r-val">${fmtData(r.data)} ${r.hora||''}</div></div>
-      <div><span class="r-badge warn">Cancelada</span></div>
+      <div><div class="r-val">${r.motivoCancelamento ? escapar(r.motivoCancelamento) : '<em style="color:var(--muted)">Não informado</em>'}</div></div>
     </div>`).join('');
 
   } else if(tipo === 'antinoshow'){
@@ -2071,6 +2135,32 @@ function abrirDashModal(tipo){
         <div><span class="r-badge ${cls}">${statusLabel}</span></div>
       </div>`;
     }).join('');
+
+  } else if(tipo === 'realizadas_kpi'){
+    titulo.textContent = 'Reuniões realizadas';
+    const dados = reunioes.filter(r=>r.realizada).filter(passaFiltroGlobal).sort((a,b)=>dataHoraValor(b)-dataHoraValor(a));
+    count = dados.length;
+    sub.textContent = count + ' reuniões realizadas no período';
+    html = `<div class="dash-col-header row-4"><span>Empresa</span><span>Consultor</span><span>Data</span><span>Status</span></div>`;
+    html += dados.map(r => `<div class="dash-row row-4">
+      <div><div class="r-empresa">${escapar(r.empresa)}</div><div class="r-sub">${escapar(r.assunto||'-')}</div></div>
+      <div><div class="r-val">${escapar(r.consultor||'-')}</div></div>
+      <div><div class="r-val">${fmtData(r.data)} ${r.hora||''}</div></div>
+      <div><span class="r-badge ok">Realizada</span></div>
+    </div>`).join('');
+
+  } else if(tipo === 'remarcadas'){
+    titulo.textContent = 'Reuniões remarcadas';
+    const dados = reunioes.filter(r=>r.statusReuniao==='Remarcada').filter(passaFiltroGlobal).sort((a,b)=>dataHoraValor(b)-dataHoraValor(a));
+    count = dados.length;
+    sub.textContent = count + ' reuniões remarcadas';
+    html = `<div class="dash-col-header row-4"><span>Empresa</span><span>Consultor</span><span>Data / Hora</span><span>Motivo</span></div>`;
+    html += dados.map(r => `<div class="dash-row row-4">
+      <div><div class="r-empresa">${escapar(r.empresa)}</div><div class="r-sub">${escapar(r.assunto||'-')}</div><span class="r-badge" style="color:var(--blueText);background:rgba(77,124,255,.12);border-color:rgba(77,124,255,.28);margin-top:6px;display:inline-block">Remarcada</span></div>
+      <div><div class="r-val">${escapar(r.consultor||'-')}</div></div>
+      <div><div class="r-val">${fmtData(r.data)} ${r.hora||''}</div></div>
+      <div><div class="r-val">${r.motivoRemarcacao ? escapar(r.motivoRemarcacao) : '<em style="color:var(--muted)">Não informado</em>'}</div></div>
+    </div>`).join('');
 
   } else if(tipo === 'trilha'){
     titulo.textContent = 'Trilha de desenvolvimento';
@@ -2170,9 +2260,19 @@ async function carregarDadosBanco(){
     const { data: tr } = await _sb.from('trilhas').select('*').eq('user_id', uid);
     if(tr) trilhas = tr.map(mapearTrilhaDB);
 
-    // Calendario
-    const { data: cal } = await _sb.from('calendario_atividades').select('*').eq('user_id', uid);
-    if(cal) cal.forEach(c => { calendarioAtividades[c.id] = c.dados; });
+    // obsGestao
+    const { data: obs } = await _sb.from('obs_gestao').select('*').eq('user_id', uid);
+    if(obs) obs.forEach(o => { obsGestao[o.id] = o.observacao||''; });
+
+    // calendarioAtividades
+    const { data: calAtiv } = await _sb.from('calendario_atividades').select('*').eq('user_id', uid);
+    if(calAtiv) calAtiv.forEach(c => {
+      calendarioAtividades[c.id] = {
+        done: c.done||false,
+        descricao: c.descricao||'',
+        atualizadoEm: c.atualizado_em||''
+      };
+    });
 
     // Perfil (token PipeRun)
     const { data: prof } = await _sb.from('profiles').select('piperun_token').eq('id', uid).single();
@@ -2180,7 +2280,23 @@ async function carregarDadosBanco(){
 
     ajustarDados();
     ordenar();
-    console.log('Dados carregados do Supabase OK');
+    // Mostrar botão migrar se banco vazio mas localStorage tem dados
+    var btnMigrar = document.getElementById('btnMigrar');
+    if(btnMigrar){
+      var temLocal = (localStorage.getItem('gaiga_reunioes_antinoshow')||'[]') !== '[]'
+                  || (localStorage.getItem('gaiga_observacoes_gestao')||'{}') !== '{}';
+      var bancVazio = reunioes.length === 0;
+      btnMigrar.style.display = (temLocal && bancVazio) ? 'flex' : 'none';
+    }
+    // Re-renderizar para garantir que dados do banco apareçam nas abas
+    render();
+    // Re-renderizar calendario se aba gestao estiver ativa
+    var gestaoSection = document.getElementById('gestao');
+    if(gestaoSection && gestaoSection.classList.contains('active')){
+      renderGestao && renderGestao();
+      renderCalendarioMestre && renderCalendarioMestre();
+    }
+    console.log('Dados carregados do Supabase OK. obs:', Object.keys(obsGestao).length, 'cal:', Object.keys(calendarioAtividades).length);
   } catch(e) {
     console.error('Erro ao carregar dados:', e);
   }
@@ -2195,6 +2311,8 @@ function mapearReuniaoDB(r){
     consultor: r.consultor||'', tipo: r.tipo||'Online',
     checks: r.checks||[], franciscoAtivo: r.francisco_ativo||false,
     realizada: r.realizada||false, statusReuniao: r.status_reuniao||'Agendada',
+    motivoNoShow: r.motivo_noshow||'', motivoCancelamento: r.motivo_cancelamento||'',
+    motivoRemarcacao: r.motivo_remarcacao||'',
     origemArquivo: r.origem_arquivo||'', origemId: r.origem_id||'', dealId: r.deal_id||''
   };
 }
@@ -2238,6 +2356,7 @@ async function salvarBanco(){
       tipo: r.tipo, checks: r.checks||[], francisco_ativo: r.franciscoAtivo||false,
       realizada: r.realizada||false, status_reuniao: r.statusReuniao||'Agendada',
       motivo_noshow: r.motivoNoShow||'', motivo_cancelamento: r.motivoCancelamento||'',
+      motivo_remarcacao: r.motivoRemarcacao||'',
       origem_arquivo: r.origemArquivo||'', origem_id: r.origemId||'', deal_id: r.dealId||'',
       updated_at: new Date().toISOString()
     }));
@@ -2278,6 +2397,23 @@ async function salvarBanco(){
       updated_at: new Date().toISOString()
     }));
     if(trilhasDB.length) await _sb.from('trilhas').upsert(trilhasDB, {onConflict:'id'});
+
+    // Upsert obsGestao (observações da gestão de atividades)
+    const obsDB = Object.entries(obsGestao).map(([id, obs]) => ({
+      id, user_id: uid, observacao: obs||'',
+      updated_at: new Date().toISOString()
+    }));
+    if(obsDB.length) await _sb.from('obs_gestao').upsert(obsDB, {onConflict:'id'});
+
+    // Upsert calendarioAtividades
+    const calDB = Object.entries(calendarioAtividades).map(([id, cal]) => ({
+      id, user_id: uid,
+      done: cal.done||false,
+      descricao: cal.descricao||'',
+      atualizado_em: cal.atualizadoEm||new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    }));
+    if(calDB.length) await _sb.from('calendario_atividades').upsert(calDB, {onConflict:'id'});
 
     // Upsert token PipeRun no perfil
     const tokenPiperun = localStorage.getItem('gaiga_piperun_token');
@@ -2329,6 +2465,11 @@ function abrirJustif(tipo, id){
     sub.textContent     = 'Informe o motivo do no-show (opcional).';
     btnConf.className   = 'btn btn-noshow';
     btnConf.textContent = 'Confirmar No-show';
+  } else if(tipo === 'remarcada'){
+    titulo.textContent  = 'Registrar Remarcação';
+    sub.textContent     = 'Informe o motivo da remarcação (opcional).';
+    btnConf.className   = 'btn btn-remarcada';
+    btnConf.textContent = 'Confirmar Remarcação';
   } else {
     titulo.textContent  = 'Registrar Cancelamento';
     sub.textContent     = 'Informe o motivo do cancelamento (opcional).';
@@ -2354,6 +2495,8 @@ function confirmarJustif(){
     followups = followups.filter(function(f){ return f.origemId !== _justifId; });
     delete avaliacoes[_justifId];
     trilhas = trilhas.filter(function(t){ return t.origemId !== _justifId; });
+  } else if(_justifTipo === 'remarcada'){
+    r.statusReuniao = 'Remarcada'; r.motivoRemarcacao = motivo; r.realizada = false;
   } else {
     r.statusReuniao = 'Cancelada'; r.motivoCancelamento = motivo; r.realizada = false;
     followups = followups.filter(function(f){ return f.origemId !== _justifId; });
@@ -2361,6 +2504,70 @@ function confirmarJustif(){
     trilhas = trilhas.filter(function(t){ return t.origemId !== _justifId; });
   }
   salvar(); render(); fecharJustif();
+}
+
+// ===== MIGRAÇÃO LOCALSTORAGE → BANCO =====
+async function migrarLocalStorageBanco(){
+  if(!_sbUser){
+    alert('Faça login primeiro.');
+    return;
+  }
+  const uid = _sbUser.id;
+  var migrados = {obs:0, cal:0, reunioes:0};
+
+  try {
+    // 1. obsGestao do localStorage
+    var obsLocal = JSON.parse(localStorage.getItem('gaiga_observacoes_gestao')||'{}');
+    var obsEntries = Object.entries(obsLocal).filter(function(e){ return e[1]; });
+    if(obsEntries.length){
+      var obsDB = obsEntries.map(function(e){
+        return { id:e[0], user_id:uid, observacao:e[1]||'', updated_at:new Date().toISOString() };
+      });
+      var r1 = await _sb.from('obs_gestao').upsert(obsDB, {onConflict:'id'});
+      if(!r1.error){ migrados.obs = obsDB.length; }
+      else { console.error('Erro obs:', r1.error); }
+    }
+
+    // 2. calendarioAtividades do localStorage
+    var calLocal = JSON.parse(localStorage.getItem('gaiga_calendario_atividades')||'{}');
+    var calEntries = Object.entries(calLocal);
+    if(calEntries.length){
+      var calDB = calEntries.map(function(e){
+        var cal = e[1]||{};
+        return {
+          id: e[0], user_id: uid,
+          done: cal.done||false,
+          descricao: cal.descricao||'',
+          atualizado_em: cal.atualizadoEm||new Date().toISOString(),
+          updated_at: new Date().toISOString()
+        };
+      });
+      var r2 = await _sb.from('calendario_atividades').upsert(calDB, {onConflict:'id'});
+      if(!r2.error){ migrados.cal = calDB.length; }
+      else { console.error('Erro cal:', r2.error); }
+    }
+
+    // 3. reunioes do localStorage (caso o banco esteja vazio)
+    var reunLocal = JSON.parse(localStorage.getItem('gaiga_reunioes_antinoshow')||'[]');
+    if(reunLocal.length && reunioes.length === 0){
+      // Carregar no estado local primeiro
+      reunioes = reunLocal;
+      await salvarBanco();
+      migrados.reunioes = reunLocal.length;
+    }
+
+    var msg = 'Migração concluída!\n';
+    msg += '• ' + migrados.obs + ' observação(ões) de gestão migrada(s)\n';
+    msg += '• ' + migrados.cal + ' atividade(s) do calendário migrada(s)\n';
+    if(migrados.reunioes) msg += '• ' + migrados.reunioes + ' reunião(ões) migrada(s)';
+    alert(msg);
+    await carregarDadosBanco();
+    render();
+
+  } catch(e){
+    alert('Erro na migração: ' + e.message);
+    console.error(e);
+  }
 }
 
 seed();ajustarFiltroPeriodo();
